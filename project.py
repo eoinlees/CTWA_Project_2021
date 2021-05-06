@@ -3,7 +3,7 @@
 from random import randint
 import time
 
-
+timeArray = []
 
 # Test Print function
 def test():
@@ -43,25 +43,28 @@ def bubbleSort(arr):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
 
 #start Timer
-startTime = time.time()
+bubbleStartTime = time.time()
 
 arr = randomArray(1000)
 bubbleSort(arr)
 
-print ("Sorted array is:")
-for i in range(len(arr)):
-    print ("%d" %arr[i]),
+#Test print array
+
+#print ("Sorted array is:")
+#for i in range(len(arr)):
+#    print ("%d" %arr[i]),
     
 
 
 # End timer
-endTime = time.time()
+bubbleEndTime = time.time()
 
 #elapsed time
-elapsedTime = endTime - startTime
+bubbleElapsedTime = bubbleEndTime - bubbleStartTime
 print("----------------------------------------------------")
-print("Bubble Sort took ", elapsedTime*100, " miliseconds")
-
+print("Bubble Sort took ", bubbleElapsedTime*100, " miliseconds")
+timeArray.append(bubbleElapsedTime)
+# https://www.geeksforgeeks.org/merge-sort/
 #Python program for implementation of MergeSort
 def mergeSort(arr):
     if len(arr) > 1:
@@ -111,21 +114,142 @@ def printList(arr):
         print(arr[i], end=" ")
     print()
 #start Timer
-startTime = time.time()
+mergeStartTime = time.time()
 # Driver Code
 if __name__ == '__main__':
     #arr = [12, 11, 13, 5, 6, 7]
-    print("Given array is", end="\n")
-    printList(arr)
+    #print("Given array is", end="\n")
+    #printList(arr)
     mergeSort(arr)
-    print("Sorted array is: ", end="\n")
-    printList(arr)
+    #print("Sorted array is: ", end="\n")
+    #printList(arr)
     
 # End timer
-endTime = time.time()
+mergeEndTime = time.time()
+
+numberOfTests = [100,100,100]
+#elapsed time
+mergeElapsedTime = mergeEndTime - mergeStartTime
+timeArray.append(mergeElapsedTime)
+print("----------------------------------------------------")
+print("Merge Sort took ", mergeElapsedTime*100, " miliseconds")
+
+headings = ["Sort type", "Time"]
+
+
+
+
+import pandas
+
+
+# Source: https://www.geeksforgeeks.org/counting-sort/
+
+
+# Python program for counting sort
+# which takes negative numbers as well
+
+# The function that sorts the given arr[]
+def count_sort(arr):
+	max_element = int(max(arr))
+	min_element = int(min(arr))
+	range_of_elements = max_element - min_element + 1
+	# Create a count array to store count of individual
+	# elements and initialize count array as 0
+	count_arr = [0 for _ in range(range_of_elements)]
+	output_arr = [0 for _ in range(len(arr))]
+
+	# Store count of each character
+	for i in range(0, len(arr)):
+		count_arr[arr[i]-min_element] += 1
+
+	# Change count_arr[i] so that count_arr[i] now contains actual
+	# position of this element in output array
+	for i in range(1, len(count_arr)):
+		count_arr[i] += count_arr[i-1]
+
+	# Build the output character array
+	for i in range(len(arr)-1, -1, -1):
+		output_arr[count_arr[arr[i] - min_element] - 1] = arr[i]
+		count_arr[arr[i] - min_element] -= 1
+
+	# Copy the output array to arr, so that arr now
+	# contains sorted characters
+	for i in range(0, len(arr)):
+		arr[i] = output_arr[i]
+
+	return arr
+
+
+# Driver program to test above function
+countingStartTime = time.time()
+
+count_sort(arr)
+
+countingEndTime = time.time()
 
 #elapsed time
-elapsedTime = endTime - startTime
-print("----------------------------------------------------")
-print("Merge Sort took ", elapsedTime*100, " miliseconds")
+countingElapsedTime = countingEndTime - countingStartTime
 
+timeArray.append(countingElapsedTime)
+
+print("----------------------------------------------------")
+print("Counting Sort took ", countingElapsedTime*100, " miliseconds")
+
+
+# Python program for implementation of Insertion Sort
+# Source: https://www.geeksforgeeks.org/insertion-sort/
+# Function to do insertion sort
+
+def insertionSort(arr):
+
+	# Traverse through 1 to len(arr)
+	for i in range(1, len(arr)):
+
+		key = arr[i]
+
+		# Move elements of arr[0..i-1], that are
+		# greater than key, to one position ahead
+		# of their current position
+		j = i-1
+		while j >= 0 and key < arr[j] :
+				arr[j + 1] = arr[j]
+				j -= 1
+		arr[j + 1] = key
+
+        return arr
+
+
+# Driver code to test above
+insertionStartTime = time.time()
+
+insertionSort(arr)
+for i in range(len(arr)):
+	print ("% d" % arr[i])
+
+insertionEndTime = time.time()
+
+#elapsed time
+insertionElapsedTime = insertionEndTime - insertionStartTime
+
+timeArray.append(insertionElapsedTime)
+
+print("----------------------------------------------------")
+print("Insertion Sort took ", insertionElapsedTime*100, " miliseconds")
+
+
+
+
+
+
+
+
+
+
+
+
+# Print dataframe of results
+sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort"]
+data = {"Sort Type":sortTypes, "Time Taken": timeArray }
+df = pandas.DataFrame(data)
+print("=========================")
+print(df) 
