@@ -36,6 +36,9 @@ def bubbleSort(arr):
             # than the next element
             if arr[j] > arr[j+1] :
                 arr[j], arr[j+1] = arr[j+1], arr[j]
+    
+    for i in range(len(arr)):
+        return("%d" %arr[i])
 
 
 # https://www.geeksforgeeks.org/merge-sort/
@@ -210,10 +213,10 @@ def runTest(numberOfTests, inputSize):
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
-        print(array)
+        #print(array)
         bubbleStartTime = time.time() #start Timer
         print("*"*12)
-        print(bubbleSort(array))
+        bubbleSort(array)
         bubbleEndTime = time.time() # End timer
         bubbleElapsedTime = bubbleEndTime - bubbleStartTime #elapsed time
         bubbleAverageTime.append(bubbleElapsedTime)
@@ -258,7 +261,7 @@ def runTest(numberOfTests, inputSize):
     for i in range(numberOfTests):
         array = randomArray(inputSize)
         countingStartTime = time.time()
-        print(count_sort(array))
+        count_sort(array)
         countingEndTime = time.time()
         countingElapsedTime = countingEndTime - countingStartTime #elapsed time
         countAverageTime.append(countingElapsedTime)
@@ -274,12 +277,19 @@ def runTest(numberOfTests, inputSize):
     
     # Insertion Sort - TO BE TESTED AND FIGURED OUT 
     # ******************************************************************************************************************************************************
-    array = randomArray(inputSize)
-    insertionStartTime = time.time() #start Timer
-    insertionSort(array)# Call function
-    insertionEndTime = time.time() # End Timer
-    insertionElapsedTime = insertionEndTime - insertionStartTime #elapsed time
-    timeArray.append(insertionElapsedTime) # Append to array
+    insertionAverageTime = []
+    for i in range(numberOfTests):
+        array = randomArray(inputSize)
+        insertionStartTime = time.time() #start Timer
+        print(insertionSort(array))# Call function
+        insertionEndTime = time.time() # End Timer
+        insertionElapsedTime = insertionEndTime - insertionStartTime #elapsed time
+        insertionAverageTime.append(insertionElapsedTime) # Append to array
+    
+    print("Insertion Sort Times: ", insertionAverageTime)
+    insertionElapsedTimeAverage = sum(insertionAverageTime)/len(insertionAverageTime)
+    timeArray.append(insertionElapsedTimeAverage)   
+        
     print("----------------------------------------------------")
     print("Insertion Sort took ", insertionElapsedTime*1000, " miliseconds")
     print("")
@@ -312,20 +322,22 @@ def runTest(numberOfTests, inputSize):
 
 
 if __name__ == '__main__':
-    runTest(10, 100)
-    print("")
-    print("")
-    print("Time Array TEst -----------------------------")
-    print(timeArray)
-    print("Time Array TEst -----------------------------")
-    print("")
-    print("")
-    # Print dataframe of results
-    headings = ["Sort type", "Time"]
-    sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort", "Qucik Sort"]
-    
-    data = {"Sort Type":sortTypes, "Time Taken": timeArray}
-    df = pandas.DataFrame(data)
-    print("="*52)
-    print(df) 
-    print("="*52)
+    size = [100, 200, 300]
+    for i in size:
+        runTest(10, i)
+        print("")
+        print("")
+        print("Time Array TEst -----------------------------")
+        print(timeArray)
+        print("Time Array TEst -----------------------------")
+        print("")
+        print("")
+        #Print dataframe of results
+        headings = ["Sort type", "Time"]
+        sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort", "Qucik Sort"]
+        
+        data = {"Sort Type":sortTypes, "Time Taken": timeArray}
+        df = pandas.DataFrame(data)
+        print("="*52)
+        print(df) 
+        print("="*52)
