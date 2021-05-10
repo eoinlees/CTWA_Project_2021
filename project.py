@@ -2,7 +2,7 @@
 # Initial set up. adding blank files
 from random import randint
 import time
-import pandas
+import pandas as pd
 
 
 # Random Array
@@ -196,148 +196,155 @@ def quickSort(arr, low, high):
 		quickSort(arr, pi+1, high)
 
 
-
 # Main Method
-timeArray = []
+globalTimeArray = [] # Initate blank time array for results
+
 def runTest(numberOfTests, inputSize):
-    
-    
-    #array = randomArray(inputSize)
-    
-    
-    
+    timeArray = []
     # Bubble Sort
-    # ****************************************************************************************************************************************************** 
-    # NOT SORTING NUMBERS
     bubbleAverageTime = []
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
-        #print(array)
+        #print("Unsorted Array for ", inputSize, "input: ", array) # Print statements for testing
         bubbleStartTime = time.time() #start Timer
-        print("*"*12)
+        #print("*"*12)
         bubbleSort(array)
+        #print("Sorted Bubble array: ", array)
+        #print("*"*12)
         bubbleEndTime = time.time() # End timer
         bubbleElapsedTime = bubbleEndTime - bubbleStartTime #elapsed time
         bubbleAverageTime.append(bubbleElapsedTime)
     
-    print("----------------------------------------------------")
-    print("Bubble Sort Times: ",bubbleAverageTime)
+    #print("----------------------------------------------------")
+    #print("Bubble Sort Times: ",bubbleAverageTime)
     
     bubbleElapsedTimeAverage = sum(bubbleAverageTime)/len(bubbleAverageTime)
     timeArray.append(bubbleElapsedTimeAverage)
     
-    print("----------------------------------------------------")
-    print("Bubble Sort took ", bubbleElapsedTime*1000, " miliseconds")
-    print("")
-    
-    
+    #print("----------------------------------------------------")
+    #print("Bubble Sort took ", bubbleElapsedTime*1000, " miliseconds")
+    #print("")
     
     # Merge Sort
-    #arr = randomArray(100)
-    # ****************************************************************************************************************************************************** 
-    # NOT SORTING NUMBERS
     mergeAverageTime = []
+    
     for i in range(numberOfTests):
         array = randomArray(inputSize)
+        #print("The unsorted array for ", inputSize, "is: ", array) #Test print
         mergeStartTime = time.time() #start Timer
-        print(mergeSort(array))
+        mergeSort(array)
+        #print("The Merge sorted array for ", inputSize, "is: ", array)
         mergeEndTime = time.time() # End timer
         mergeElapsedTime = mergeEndTime - mergeStartTime #elapsed time
         mergeAverageTime.append(mergeElapsedTime)
         
-    print("----------------------------------------------------")
-    print("Merge Sort Times: ", mergeAverageTime)
+    #print("----------------------------------------------------")
+    #print("Merge Sort Times: ", mergeAverageTime)
     mergeElapsedTimeAverage = sum(mergeAverageTime)/len(mergeAverageTime)
     timeArray.append(mergeElapsedTimeAverage)
     
-    print("----------------------------------------------------")
-    print("Merge Sort took ", mergeElapsedTimeAverage*1000, " miliseconds")
-    print("")
+    #print("----------------------------------------------------")
+    #print("Merge Sort took on Average of ",numberOfTests," tests: ", mergeElapsedTimeAverage*1000, " miliseconds")
+    #print("")
     
     
     # Counting Sort    
     countAverageTime = []
+    
     for i in range(numberOfTests):
         array = randomArray(inputSize)
+        #print("The unsorted array for ", inputSize, "is: ", array) #Test print
         countingStartTime = time.time()
         count_sort(array)
+        #print("The counting sorted array for ", inputSize, "is: ", array)
         countingEndTime = time.time()
         countingElapsedTime = countingEndTime - countingStartTime #elapsed time
         countAverageTime.append(countingElapsedTime)
     
-    print("Counting Sort Times: ",countAverageTime)
+    #print("Counting Sort Times: ",countAverageTime)
     countingElapsedTimeAverage = sum(countAverageTime)/len(countAverageTime)
     timeArray.append(countingElapsedTimeAverage)
     
-    print("-"*52)
-    print("Counting Sort took on average ", countingElapsedTimeAverage*1000, " miliseconds")
-    print("")
+    #print("-"*52)
+    #print("Counting Sort took on average ", countingElapsedTimeAverage*1000, " miliseconds")
+    #print("")
     
     
-    # Insertion Sort - TO BE TESTED AND FIGURED OUT 
-    # ******************************************************************************************************************************************************
+    # Insertion Sort 
     insertionAverageTime = []
+    
     for i in range(numberOfTests):
         array = randomArray(inputSize)
+        #print("The unsorted array for ", inputSize, "is: ", array) #Test print
         insertionStartTime = time.time() #start Timer
-        print(insertionSort(array))# Call function
+        insertionSort(array)# Call function
+        #print("The Insertion sorted array for ", inputSize, "is: ", array)
         insertionEndTime = time.time() # End Timer
         insertionElapsedTime = insertionEndTime - insertionStartTime #elapsed time
         insertionAverageTime.append(insertionElapsedTime) # Append to array
     
-    print("Insertion Sort Times: ", insertionAverageTime)
+    #print("Insertion Sort Times: ", insertionAverageTime)
     insertionElapsedTimeAverage = sum(insertionAverageTime)/len(insertionAverageTime)
     timeArray.append(insertionElapsedTimeAverage)   
         
-    print("----------------------------------------------------")
-    print("Insertion Sort took ", insertionElapsedTime*1000, " miliseconds")
-    print("")
+    #print("----------------------------------------------------")
+    #print("Insertion Sort took ", insertionElapsedTime*1000, " miliseconds")
+    #print("")
     
     
     # Quick Sort
-    # ****************************************************************************************************************************************************** 
-    # NOT SORTING NUMBERS
     quickAverageTime = []
+    
     for i in range(numberOfTests):
         array = randomArray(inputSize)
-        #print(array) # Test print
+        #print("The unsorted array for ", inputSize, "is: ", array) #Test print
         quickStartTime = time.time() #start Timer
         length = len(array)
-        print(quickSort(array, 0, length-1)) # Test printing array
+        quickSort(array, 0, length-1) # Test printing array
+        #print("The Quick sorted array for ", inputSize, "is: ", array)
         quickEndTime = time.time() # End Timer
         quickElapsedTime = quickEndTime - quickStartTime #elapsed time
         quickAverageTime.append(quickElapsedTime) # Append to array
         
-    print("Quick Sort Times: ", quickAverageTime)
+    #print("Quick Sort Times: ", quickAverageTime)
     quickElapsedTimeAverage = sum(quickAverageTime)/len(quickAverageTime)
     timeArray.append(quickElapsedTimeAverage)    
     
-    print("----------------------------------------------------")
-    print("Quick Sort took ", quickElapsedTimeAverage*1000, " miliseconds")
-    print("")
+    #print("----------------------------------------------------")
+    #print("Quick Sort took ", quickElapsedTimeAverage*1000, " miliseconds")
+    #print("")
 
-    # ******************************************************************************************************************************************************
+    globalTimeArray.append(timeArray)
 
-
+def chunks(lst, n):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 if __name__ == '__main__':
-    size = [100, 200, 300]
+    size = [100, 250, 500, 750, 1000, 1250, 2500, 3750, 5000]
+    #  6250, 7500, 8750, 10000
     for i in size:
         runTest(10, i)
-        print("")
-        print("")
-        print("Time Array TEst -----------------------------")
-        print(timeArray)
-        print("Time Array TEst -----------------------------")
-        print("")
-        print("")
-        #Print dataframe of results
-        headings = ["Sort type", "Time"]
-        sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort", "Qucik Sort"]
+    
+    #print("")
+    #print("")
+    #print("Time Array-----------------------------")
+    #print(globalTimeArray)
+    #print("Time Array-----------------------------")
+    #print("")
+    #print("")
         
-        data = {"Sort Type":sortTypes, "Time Taken": timeArray}
-        df = pandas.DataFrame(data)
-        print("="*52)
-        print(df) 
-        print("="*52)
+    #Print dataframe of results
+
+    sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort", "Qucik Sort"]
+    df =  pd.DataFrame(data=globalTimeArray, index=size, columns=sortTypes)
+
+
+    
+    
+    #Print dataframe
+    print("="*71)
+    print(df) 
+    print("="*71)
