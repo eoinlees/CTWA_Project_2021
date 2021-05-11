@@ -3,6 +3,8 @@
 from random import randint
 import time
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 # Random Array
@@ -10,9 +12,8 @@ def randomArray(n):
     array = []
     for i in range (0,n,1):
         # source: https://docs.python.org/3/library/random.html
-        array.append(randint(0,1000))
+        array.append(randint(0,100))
     return array
-
 
 #Print 100 numbers array
 #print(randomArray(1000))
@@ -323,28 +324,40 @@ def chunks(lst, n):
         yield lst[i:i + n]
 
 if __name__ == '__main__':
-    size = [100, 250, 500, 750, 1000, 1250, 2500, 3750, 5000]
-    #  6250, 7500, 8750, 10000
+    totalStartTime = time.time()
+    size = [100, 250, 500, 750, 1000] # To test functionality 
+    #size = [100, 250, 500, 750, 1000, 1250, 2500, 3750, 5000, 6250, 7500, 8750, 10000] # Full test results - Warning, takes 10 mins to execute
+    
+    #
     for i in size:
         runTest(10, i)
     
-    #print("")
-    #print("")
-    #print("Time Array-----------------------------")
-    #print(globalTimeArray)
-    #print("Time Array-----------------------------")
-    #print("")
-    #print("")
-        
-    #Print dataframe of results
 
+    #print("Time Array-----------------------------")# Test print global array
+    #round(globalTimeArray, 3) #[i * 1000 for i in globalTimeArray]
+    #print("Time Array-----------------------------")
+
+    #milliseconds 
+    
+    #set dataframe of results
     sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort", "Qucik Sort"]
     df =  pd.DataFrame(data=globalTimeArray, index=size, columns=sortTypes)
-
-
-    
-    
+    df*1000
     #Print dataframe
     print("="*71)
     print(df) 
     print("="*71)
+    totalEndTime = time.time()
+    
+    # Print time taked to execute program
+    totalTimeElapsed = totalEndTime - totalStartTime
+    print("Program took ", round(totalTimeElapsed, 3), " seconds to run")
+    
+    #Save data in csv to plot graphs in seperate program quicker
+    #df.to_csv('sortingDataframe.csv')
+    print(df.dtypes)
+    df.select_dtypes(include=['float64']) * 1000
+    print(df)
+    # Plot data    
+    #sns.lineplot(data=df,markers=True,dashes=False)
+    #plt.show()
