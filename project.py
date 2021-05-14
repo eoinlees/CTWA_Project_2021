@@ -8,14 +8,15 @@ import matplotlib.pyplot as plt
 
 
 # Random Array
+# Creates a random array from the discreen uniform distribution
 def randomArray(n):
     array = []
-    for i in range (0,n,1):
+    for i in range (0,n,1): # low, high, size
         # source: https://docs.python.org/3/library/random.html
         array.append(randint(0,100))
     return array
 
-#Print 100 numbers array
+#Print 100 numbers array # Test function 
 #print(randomArray(1000))
 
 # Bubble Sort
@@ -41,9 +42,9 @@ def bubbleSort(arr):
     for i in range(len(arr)):
         return("%d" %arr[i])
 
+# Merge Sort
+# Source: https://www.geeksforgeeks.org/merge-sort/
 
-# https://www.geeksforgeeks.org/merge-sort/
-#Python program for implementation of MergeSort
 def mergeSort(arr):
     if len(arr) > 1:
 
@@ -85,16 +86,14 @@ def mergeSort(arr):
             j += 1
             k += 1
 
-# Code to print the list
-
+# Code to print the list for testing sort
 def printList(arr):
     for i in range(len(arr)):
         print(arr[i], end=" ")
     print()
 
+# Counting Sort
 # Source: https://www.geeksforgeeks.org/counting-sort/
-# Python program for counting sort
-# which takes negative numbers as well
 
 # The function that sorts the given arr[]
 def count_sort(arr):
@@ -127,10 +126,8 @@ def count_sort(arr):
 
 	return arr
 
-
-# Python program for implementation of Insertion Sort
+# Insertion Sort
 # Source: https://www.geeksforgeeks.org/insertion-sort/
-# Function to do insertion sort
 
 def insertionSort(arr):
 
@@ -159,6 +156,7 @@ def insertionSort(arr):
 # Quick Sort
 # Source: https://www.geeksforgeeks.org/python-program-for-quicksort/
 
+# Partition function
 def partition(arr, low, high):
 	i = (low-1)		 # index of smaller element
 	pivot = arr[high]	 # pivot
@@ -182,7 +180,6 @@ def partition(arr, low, high):
 # high --> Ending index
 
 # Function to do Quick sort
-
 def quickSort(arr, low, high):
 	if len(arr) == 1:
 		return arr
@@ -196,14 +193,15 @@ def quickSort(arr, low, high):
 		quickSort(arr, low, pi-1)
 		quickSort(arr, pi+1, high)
 
-
-# Main Method
+# Global variables
 globalTimeArray = [] # Initate blank time array for results
 
+# Run Method - to run all sorting algorithms on function call 
+
 def runTest(numberOfTests, inputSize):
-    timeArray = []
+    timeArray = [] # Local time array for adding to global list on iteration
     # Bubble Sort
-    bubbleAverageTime = []
+    bubbleAverageTime = [] # Local bubble list for adding to time array on iteration
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
@@ -214,21 +212,22 @@ def runTest(numberOfTests, inputSize):
         #print("Sorted Bubble array: ", array)
         #print("*"*12)
         bubbleEndTime = time.time() # End timer
-        bubbleElapsedTime = bubbleEndTime - bubbleStartTime #elapsed time
+        bubbleElapsedTime = (bubbleEndTime - bubbleStartTime)*1000 #elapsed time - in milliseconds
+        bubbleElapsedTime = round(bubbleElapsedTime, 2)
         bubbleAverageTime.append(bubbleElapsedTime)
     
     #print("----------------------------------------------------")
     #print("Bubble Sort Times: ",bubbleAverageTime)
     
-    bubbleElapsedTimeAverage = sum(bubbleAverageTime)/len(bubbleAverageTime)
-    timeArray.append(bubbleElapsedTimeAverage)
+    bubbleElapsedTimeAverage = sum(bubbleAverageTime)/len(bubbleAverageTime) # Calculation average time taken
+    timeArray.append(bubbleElapsedTimeAverage) # apending average time to local time array
     
     #print("----------------------------------------------------")
-    #print("Bubble Sort took ", bubbleElapsedTime*1000, " miliseconds")
+    #print("Bubble Sort took ", bubbleElapsedTime, " miliseconds")
     #print("")
     
     # Merge Sort
-    mergeAverageTime = []
+    mergeAverageTime = [] # Local merge list for adding to time array on iteration
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
@@ -237,21 +236,22 @@ def runTest(numberOfTests, inputSize):
         mergeSort(array)
         #print("The Merge sorted array for ", inputSize, "is: ", array)
         mergeEndTime = time.time() # End timer
-        mergeElapsedTime = mergeEndTime - mergeStartTime #elapsed time
+        mergeElapsedTime = (mergeEndTime - mergeStartTime)*1000 #elapsed time - in milliseconds
+        mergeElapsedTime = round(mergeElapsedTime, 2)
         mergeAverageTime.append(mergeElapsedTime)
         
     #print("----------------------------------------------------")
     #print("Merge Sort Times: ", mergeAverageTime)
-    mergeElapsedTimeAverage = sum(mergeAverageTime)/len(mergeAverageTime)
-    timeArray.append(mergeElapsedTimeAverage)
+    mergeElapsedTimeAverage = sum(mergeAverageTime)/len(mergeAverageTime) # Calculation average time taken
+    timeArray.append(mergeElapsedTimeAverage) # apending average time to local time array
     
     #print("----------------------------------------------------")
-    #print("Merge Sort took on Average of ",numberOfTests," tests: ", mergeElapsedTimeAverage*1000, " miliseconds")
+    #print("Merge Sort took on Average of ",numberOfTests," tests: ", mergeElapsedTimeAverage, " miliseconds")
     #print("")
     
     
     # Counting Sort    
-    countAverageTime = []
+    countAverageTime = [] # Local count array for adding to time array on iteration
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
@@ -260,20 +260,21 @@ def runTest(numberOfTests, inputSize):
         count_sort(array)
         #print("The counting sorted array for ", inputSize, "is: ", array)
         countingEndTime = time.time()
-        countingElapsedTime = countingEndTime - countingStartTime #elapsed time
-        countAverageTime.append(countingElapsedTime)
+        countingElapsedTime = (countingEndTime - countingStartTime)*1000 #elapsed time - in milliseconds
+        countingElapsedTime = round(countingElapsedTime, 2)
+        countAverageTime.append(countingElapsedTime) 
     
     #print("Counting Sort Times: ",countAverageTime)
-    countingElapsedTimeAverage = sum(countAverageTime)/len(countAverageTime)
-    timeArray.append(countingElapsedTimeAverage)
+    countingElapsedTimeAverage = sum(countAverageTime)/len(countAverageTime) # Calculation average time taken
+    timeArray.append(countingElapsedTimeAverage) # apending average time to local time array
     
     #print("-"*52)
-    #print("Counting Sort took on average ", countingElapsedTimeAverage*1000, " miliseconds")
+    #print("Counting Sort took on average ", countingElapsedTimeAverage, " miliseconds")
     #print("")
     
     
     # Insertion Sort 
-    insertionAverageTime = []
+    insertionAverageTime = [] # Local insertion array for adding to time array on iteration
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
@@ -282,20 +283,21 @@ def runTest(numberOfTests, inputSize):
         insertionSort(array)# Call function
         #print("The Insertion sorted array for ", inputSize, "is: ", array)
         insertionEndTime = time.time() # End Timer
-        insertionElapsedTime = insertionEndTime - insertionStartTime #elapsed time
+        insertionElapsedTime = (insertionEndTime - insertionStartTime)*1000 #elapsed time - in milliseconds
+        insertionElapsedTime = round(insertionElapsedTime, 2)
         insertionAverageTime.append(insertionElapsedTime) # Append to array
     
     #print("Insertion Sort Times: ", insertionAverageTime)
-    insertionElapsedTimeAverage = sum(insertionAverageTime)/len(insertionAverageTime)
-    timeArray.append(insertionElapsedTimeAverage)   
+    insertionElapsedTimeAverage = sum(insertionAverageTime)/len(insertionAverageTime) # Calculation average time taken
+    timeArray.append(insertionElapsedTimeAverage)    # apending average time to local time array
         
     #print("----------------------------------------------------")
-    #print("Insertion Sort took ", insertionElapsedTime*1000, " miliseconds")
+    #print("Insertion Sort took ", insertionElapsedTime, " miliseconds")
     #print("")
     
     
     # Quick Sort
-    quickAverageTime = []
+    quickAverageTime = [] # Local quick array for adding to time array on iteration
     
     for i in range(numberOfTests):
         array = randomArray(inputSize)
@@ -305,59 +307,73 @@ def runTest(numberOfTests, inputSize):
         quickSort(array, 0, length-1) # Test printing array
         #print("The Quick sorted array for ", inputSize, "is: ", array)
         quickEndTime = time.time() # End Timer
-        quickElapsedTime = quickEndTime - quickStartTime #elapsed time
+        quickElapsedTime = (quickEndTime - quickStartTime)*1000 #elapsed time - in milliseconds
+        quickElapsedTime = round(quickElapsedTime, 2) # tidy up result
         quickAverageTime.append(quickElapsedTime) # Append to array
         
     #print("Quick Sort Times: ", quickAverageTime)
-    quickElapsedTimeAverage = sum(quickAverageTime)/len(quickAverageTime)
-    timeArray.append(quickElapsedTimeAverage)    
+    quickElapsedTimeAverage = sum(quickAverageTime)/len(quickAverageTime) # Calculation average time taken
+    timeArray.append(quickElapsedTimeAverage)    # apending average time to local time array
     
     #print("----------------------------------------------------")
-    #print("Quick Sort took ", quickElapsedTimeAverage*1000, " miliseconds")
+    #print("Quick Sort took ", quickElapsedTimeAverage, " miliseconds")
     #print("")
 
-    globalTimeArray.append(timeArray)
+    globalTimeArray.append(timeArray) # Apend all average values from the n input to global list before next iteration
 
-def chunks(lst, n):
-    """Yield successive n-sized chunks from lst."""
-    for i in range(0, len(lst), n):
-        yield lst[i:i + n]
 
+
+# Main method that runs when program is executed in console.
 if __name__ == '__main__':
-    totalStartTime = time.time()
-    size = [100, 250, 500, 750, 1000] # To test functionality 
-    #size = [100, 250, 500, 750, 1000, 1250, 2500, 3750, 5000, 6250, 7500, 8750, 10000] # Full test results - Warning, takes 10 mins to execute
+    totalStartTime = time.time() # timer to print length algorithm takes to run
+    
+    # Use this code to test code functionality. It should take less than 4 seconds to run. 
+    #size = [100, 250, 500, 750, 1000] # To test functionality - use for review of code
+    
+    # This variable relates to the results published in the report and the table and graph associated. 
+    size = [100, 250, 500, 750, 1000, 1250, 2500, 3750, 5000, 6250, 7500, 8750, 10000] # Full test results - Warning, takes 10 mins to execute
     
     #
     for i in size:
-        runTest(10, i)
+        runTest(10, i) # run each algorithm 10 times 
     
 
     #print("Time Array-----------------------------")# Test print global array
     #round(globalTimeArray, 3) #[i * 1000 for i in globalTimeArray]
     #print("Time Array-----------------------------")
 
-    #milliseconds 
     
     #set dataframe of results
     sortTypes = ["Bubble Sort", "Merge Sort", "Counting Sort", "Insertion Sort", "Qucik Sort"]
     df =  pd.DataFrame(data=globalTimeArray, index=size, columns=sortTypes)
-    df*1000
+    
     #Print dataframe
-    print("="*71)
+    print("")
+    print("")
+    print("="*72)
+    print(" "*3, "Average time taken to run each sorting algorithm in milliseconds")
+    print("="*72)
     print(df) 
-    print("="*71)
+    print("="*72)
+    
+    
     totalEndTime = time.time()
     
     # Print time taked to execute program
     totalTimeElapsed = totalEndTime - totalStartTime
+    print("")
     print("Program took ", round(totalTimeElapsed, 3), " seconds to run")
+    
+    
+    # Testing functions
     
     #Save data in csv to plot graphs in seperate program quicker
     #df.to_csv('sortingDataframe.csv')
-    print(df.dtypes)
-    df.select_dtypes(include=['float64']) * 1000
-    print(df)
+    
+    
     # Plot data    
-    #sns.lineplot(data=df,markers=True,dashes=False)
-    #plt.show()
+    plot = sns.lineplot(data=df,markers=True,dashes=False) # plot using seaborn
+    plot.set(xlabel='Array Size', ylabel='Time taken (milliseconds)') # label axis
+    #plt.yscale("log") # Uncomment to graph log scale results for larger number of inputs
+
+    plt.show() # Show plot

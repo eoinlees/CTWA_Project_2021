@@ -17,5 +17,6 @@ print(df.head())
 
 
 # Plot data    
-sns.lineplot(data=df, markers=True, dashes=False)
+sns.lineplot(data=df, markers=True, dashes=False, xlabel='Time taken (milliseconds) ', ylabel='input value')
+
 plt.show()
